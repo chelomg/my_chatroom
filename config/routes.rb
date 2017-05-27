@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     member do
       post :close
     end
-  end
 
-  resources :messages, only: [:create]
+    resources :messages, only: [:create]
+
+  end
 end
