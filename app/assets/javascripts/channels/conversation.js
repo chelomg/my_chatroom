@@ -28,7 +28,12 @@ App.conversation = App.cable.subscriptions.create("ConversationChannel", {
     var messages_list = conversation.find('.messages-list');
     var height = messages_list[0].scrollHeight;
     messages_list.scrollTop(height);
-  }
+  },
+
+  speak: function(message) {
+    return this.perform('speak', {
+      message: message
+    });}
 });
 $(document).on('submit', '.new_message', function(e) {
   e.preventDefault();
