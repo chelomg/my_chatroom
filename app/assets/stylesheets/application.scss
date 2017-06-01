@@ -31,18 +31,22 @@ ul {
 
 .message-sent {
   position: relative;
-  background-color: #D9EDF7;
+  background-color: #0084ff;
   border-color: #BCE8F1;
-  margin: 5px 20px;
+  margin: 3px 20px;
   padding: 10px;
   float: right;
+  color: #fff;
+  border-radius: 30px;
 }
 
 
 .message-received {
-  background-color: #F1F0F0;
+  background-color: #eee;
   border-color: #EEEEEE;
-  margin: 5px 20px;
+  margin: 3px 20px;
   padding: 10px;
   float: left;
+  border-radius: 30px;
 }
+
