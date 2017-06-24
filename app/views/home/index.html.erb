@@ -15,6 +15,18 @@
         </ul>
       </div>
     </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Friend list</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @friends.each do |friend| %>
+            <li><%= link_to friend.recipient.email, conversations_path(user_id: friend.recipient), remote: true, method: :post %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 

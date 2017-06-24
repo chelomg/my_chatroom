@@ -5,6 +5,14 @@ class Conversation < ApplicationRecord
 
   validates :sender_id, uniqueness: { scope: :recipient_id }
 
+  enum status: {
+    niled: nil,
+    pending: 0,
+    accepted: 1,
+    declined: 2,
+    blocked: 3
+  }
+
   scope :between, -> (sender_id, recipient_id) do
     where(sender_id: sender_id, recipient_id: recipient_id).or(
       where(sender_id: recipient_id, recipient_id: sender_id)
