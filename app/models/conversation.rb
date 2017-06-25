@@ -19,6 +19,12 @@ class Conversation < ApplicationRecord
     )
   end
 
+  scope :my_relation, -> (my_id) do
+    where(sender_id: my_id).or(
+      where(recipient_id: my_id)
+    )
+  end
+
   def self.get(sender_id, recipient_id)
     conversation = between(sender_id, recipient_id).first
     return conversation if conversation.present?

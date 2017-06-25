@@ -11,4 +11,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:create]
 
   end
+
+  get "/messages/new", to: "messages#new"
+  post "/messages/sent", to: "messages#sent"
 end

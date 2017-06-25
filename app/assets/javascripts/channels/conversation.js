@@ -35,7 +35,7 @@ App.conversation = App.cable.subscriptions.create("ConversationChannel", {
       message: message
     });}
 });
-$(document).on('submit', '.new_message', function(e) {
+$(document).on('submit', '.create_message', function(e) {
   e.preventDefault();
   var values = $(this).serializeArray();
   App.conversation.speak(values);
