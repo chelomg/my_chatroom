@@ -13,15 +13,17 @@ class MessagesController < ApplicationController
   end
 
   def sent
-    #if User.all.count - Conversation.my_relation(current_user.id).count > 1
-    random_user = random_pick
-    conversation = Conversation.new(sender_id: current_user.id, recipient_id: random_user.id, status: 0, action_id: current_user.id)
-    conversation.save
-    message = conversation.messages.new(params.require(:message).permit(:body))
-    message.user_id = current_user.id
-    message.save
-
-    redirect_to root_path
+    if User.all.count - Conversation.my_relation(current_user.id).count > 1
+      random_user = random_pick
+      conversation = Conversation.new(sender_id: current_user.id, recipient_id: random_user.id, status: 0, action_id: current_user.id)
+      render :new, alert: 'conversation error' unless conversation.save
+      message = conversation.messages.new(params.require(:message).permit(:body))
+      message.user_id = current_user.id
+      render :new, alert: 'message save error' unless message.save
+      redirect_to root_path, notice: 'send OK'
+    else
+      render :new, alert: 'no user can pending'
+    end
   end
 
   private
