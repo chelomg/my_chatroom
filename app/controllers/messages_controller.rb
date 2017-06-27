@@ -20,7 +20,6 @@ class MessagesController < ApplicationController
       message = conversation.messages.new(params.require(:message).permit(:body))
       message.user_id = current_user.id
       render :new, alert: 'message save error' unless message.save
-      FriendshipChannel.sent({user_id: random_user.id, message: message.body})
       redirect_to root_path, notice: 'send OK'
     else
       render :new, alert: 'no user can pending'
