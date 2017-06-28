@@ -29,9 +29,10 @@ App.friendship = App.cable.subscriptions.create("FriendshipChannel", {
       }
     }
     else {
-      conversation.find('ul').append(data['message']);
+      $('.friend-list .panel-body ul').append(data['list']);
     }
 
+    // TODO: Cannot read property 'scrollHeight' for response invite user
     var messages_list = conversation.find('.messages-list');
     var height = messages_list[0].scrollHeight;
     messages_list.scrollTop(height);

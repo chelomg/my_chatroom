@@ -24,7 +24,7 @@
       <div class="panel-body">
         <ul>
           <% @friends.each do |friend| %>
-            <li><%= link_to friend.recipient.email, conversation_path(friend.recipient), remote: true %></li>
+            <li><%= link_to friend.email, conversation_path(friend), remote: true %></li>
           <% end %>
         </ul>
       </div>

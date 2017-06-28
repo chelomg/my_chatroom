@@ -38,7 +38,7 @@ class Conversation < ApplicationRecord
 
   def self.find_friends(user)
     result = []
-    Conversation.my_relation(user).each do |conversation|
+    Conversation.my_relation(user).accepted.each do |conversation|
       if conversation.recipient_id == user.id
         result << conversation.sender_id
       else

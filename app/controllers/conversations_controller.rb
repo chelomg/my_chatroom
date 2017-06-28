@@ -31,9 +31,10 @@ class ConversationsController < ApplicationController
 
   def accept
     @conversation = Conversation.find(params[:id])
+    @accept_user = User.find(@conversation.action_id)
     @conversation.update_attributes(status: 1, action_id: current_user.id)
-    @accept_user = User.find(@conversation.sender_id)
 
+    FriendshipChannel.response_accepted(@accept_user, current_user)
     add_to_conversations unless conversated?
 
     respond_to do |format|
