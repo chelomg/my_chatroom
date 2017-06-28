@@ -13,7 +13,7 @@
       </div>
       <div>
         <%= link_to '只是垃圾，資源回收', decline_conversation_path(conversation), class: 'btn btn-danger', remote: true, method: :post %>
-        <%= link_to '接受', '', class: 'btn btn-default' %>
+        <%= link_to '接受', accept_conversation_path(conversation), class: 'btn btn-default', remote: true, method: :post %>
       </div>
     </div>
   </div>

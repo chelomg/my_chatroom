@@ -21,8 +21,20 @@ class ConversationsController < ApplicationController
 
   def decline
     @conversation = Conversation.find(params[:id])
-    @conversation.update_attributes(status: 2)
+    @conversation.update_attributes(status: 2, action_id: current_user.id)
     session[:conversations].delete(@conversation.id)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def accept
+    @conversation = Conversation.find(params[:id])
+    @conversation.update_attributes(status: 1, action_id: current_user.id)
+    @accept_user = User.find(@conversation.sender_id)
+
+    add_to_conversations unless conversated?
 
     respond_to do |format|
       format.js

@@ -35,4 +35,16 @@ class Conversation < ApplicationRecord
   def opposed_user(user)
     user == recipient ? sender : recipient
   end
+
+  def self.find_friends(user)
+    result = []
+    Conversation.my_relation(user).each do |conversation|
+      if conversation.recipient_id == user.id
+        result << conversation.sender_id
+      else
+        result << conversation.recipient_id
+      end
+    end
+    result
+  end
 end

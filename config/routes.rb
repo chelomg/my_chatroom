@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       post :close
       post :decline
+      post :accept
     end
 
     resources :messages, only: [:create]
