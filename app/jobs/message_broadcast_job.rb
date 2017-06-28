@@ -30,7 +30,15 @@ class MessageBroadcastJob < ApplicationJob
   end
 
   def broadcast_friendship(user, message)
-    FriendshipChannel.sent({user_id: user.id, message: message.body})
+    ActionCable.server.broadcast(
+      "friendships-#{user.id}",
+      message: render_message(message, user),
+      window: ApplicationController.render(
+        partial: 'conversations/invite',
+        locals: { conversation: message.conversation, user: user }
+      ),
+      conversation_id: message.conversation_id
+    )
   end
 
   def render_message(message, user)

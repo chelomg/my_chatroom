@@ -19,6 +19,16 @@ class ConversationsController < ApplicationController
     end
   end
 
+  def decline
+    @conversation = Conversation.find(params[:id])
+    @conversation.update_attributes(status: 2)
+    session[:conversations].delete(@conversation.id)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def add_to_conversations

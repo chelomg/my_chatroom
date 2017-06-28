@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :conversations, only: [:create, :new, :show] do
     member do
       post :close
+      post :decline
     end
 
     resources :messages, only: [:create]

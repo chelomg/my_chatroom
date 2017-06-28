@@ -4,6 +4,7 @@ App.conversation = App.cable.subscriptions.create("ConversationChannel", {
   received: function(data) {
     var conversation = $('#conversations-list').find("[data-conversation-id='" + data['conversation_id'] + "']");
 
+    //to detect is sender or recepient
     if (data['window'] !== undefined) {
       var conversation_visible = conversation.is(':visible');
 
