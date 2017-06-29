@@ -20,9 +20,9 @@ class MessagesController < ApplicationController
       message = conversation.messages.new(params.require(:message).permit(:body))
       message.user_id = current_user.id
       render :new, alert: 'message save error' unless message.save
-      redirect_to root_path, notice: 'send OK'
+      redirect_to root_path, notice: '丟～丟～'
     else
-      render :new, alert: 'no user can pending'
+      redirect_to root_path, notice: '沒有人可以給你丟了啦'
     end
   end
 

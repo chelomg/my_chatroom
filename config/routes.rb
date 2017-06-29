@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :close
       post :decline
       post :accept
+      get :bottle
     end
 
     resources :messages, only: [:create]

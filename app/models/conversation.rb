@@ -36,6 +36,14 @@ class Conversation < ApplicationRecord
     user == recipient ? sender : recipient
   end
 
+  def self.find_request_users(user)
+    result = []
+    Conversation.my_relation(user).pending.each do |conversation|
+      result << conversation.action_id if conversation.action_id != user.id
+    end
+    result
+  end
+
   def self.find_friends(user)
     result = []
     Conversation.my_relation(user).accepted.each do |conversation|

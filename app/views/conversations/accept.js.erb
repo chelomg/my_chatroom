@@ -1,6 +1,9 @@
 // remove invite view
 $('#invites-list').find("[data-conversation-id='" + "<%= @conversation.id %>" + "']").parent().remove();
 
+// remove friend request list
+$('.friend-request-list .panel-body ul li').find("a[href='/conversations/" + "<%= @conversation.sender_id %>" + "/bottle']").remove();
+
 //add frinde list
 $('.friend-list .panel-body ul').append("<%= j(render 'conversations/list_item', accept_user: @accept_user )%>");
 

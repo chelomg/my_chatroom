@@ -9,6 +9,15 @@ class ConversationsController < ApplicationController
     end
   end
 
+  def bottle
+    @conversation = Conversation.between(current_user.id, params[:id]).first
+    @user = current_user
+    #add_to_conversations unless conversated?
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def close
     @conversation = Conversation.find(params[:id])
 
