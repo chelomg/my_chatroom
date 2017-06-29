@@ -1,0 +1,10 @@
+bottle = $('#invites-list').find("[data-conversation-id='" + <%= @conversation.id %> + "']");
+
+var bottle_visible = bottle.is(':visible');
+
+if (!bottle_visible) {
+  $('#invites-list').append("<%= j(render 'conversations/invite', conversation: @conversation, user: @user) %>");
+
+}
+bottle.find('.panel-body').toggle();
+

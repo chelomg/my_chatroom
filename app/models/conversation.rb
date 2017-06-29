@@ -5,9 +5,23 @@ class Conversation < ApplicationRecord
 
   validates :sender_id, uniqueness: { scope: :recipient_id }
 
+  enum status: {
+    niled: nil,
+    pending: 0,
+    accepted: 1,
+    declined: 2,
+    blocked: 3
+  }
+
   scope :between, -> (sender_id, recipient_id) do
     where(sender_id: sender_id, recipient_id: recipient_id).or(
       where(sender_id: recipient_id, recipient_id: sender_id)
+    )
+  end
+
+  scope :my_relation, -> (my_id) do
+    where(sender_id: my_id).or(
+      where(recipient_id: my_id)
     )
   end
 
@@ -20,5 +34,25 @@ class Conversation < ApplicationRecord
 
   def opposed_user(user)
     user == recipient ? sender : recipient
+  end
+
+  def self.find_request_users(user)
+    result = []
+    Conversation.my_relation(user).pending.each do |conversation|
+      result << conversation.action_id if conversation.action_id != user.id
+    end
+    result
+  end
+
+  def self.find_friends(user)
+    result = []
+    Conversation.my_relation(user).accepted.each do |conversation|
+      if conversation.recipient_id == user.id
+        result << conversation.sender_id
+      else
+        result << conversation.recipient_id
+      end
+    end
+    result
   end
 end

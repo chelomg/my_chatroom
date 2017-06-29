@@ -1,6 +1,12 @@
-App.conversation = App.cable.subscriptions.create("ConversationChannel", {
-  connected: function() {},
-  disconnected: function() {},
+App.friendship = App.cable.subscriptions.create("FriendshipChannel", {
+  connected: function() {
+    // Called when the subscription is ready for use on the server
+  },
+
+  disconnected: function() {
+    // Called when the subscription has been terminated by the server
+  },
+
   received: function(data) {
     var conversation = $('#conversations-list').find("[data-conversation-id='" + data['conversation_id'] + "']");
 
@@ -17,28 +23,22 @@ App.conversation = App.cable.subscriptions.create("ConversationChannel", {
         conversation.find('.messages-list').find('ul').append(data['message']);
       }
       else {
-        $('#conversations-list').append(data['window']);
-        conversation = $('#conversations-list').find("[data-conversation-id='" + data['conversation_id'] + "']");
-        conversation.find('.panel-body').toggle();
+        $('#invites-list').append(data['window']);
+        conversation = $('#invites-list').find("[data-conversation-id='" + data['conversation_id'] + "']");
+        //conversation.find('.panel-body').toggle();
       }
     }
     else {
-      conversation.find('ul').append(data['message']);
+      $('.friend-list .panel-body ul').append(data['list']);
     }
 
+    // TODO: Cannot read property 'scrollHeight' for response invite user
     var messages_list = conversation.find('.messages-list');
     var height = messages_list[0].scrollHeight;
     messages_list.scrollTop(height);
   },
 
-  speak: function(message) {
-    return this.perform('speak', {
-      message: message
-    });}
-});
-$(document).on('submit', '.create_message', function(e) {
-  e.preventDefault();
-  var values = $(this).serializeArray();
-  App.conversation.speak(values);
-  $(this).trigger('reset');
+  sent: function() {
+    return this.perform('sent');
+  }
 });

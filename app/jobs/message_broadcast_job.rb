@@ -5,6 +5,7 @@ class MessageBroadcastJob < ApplicationJob
     sender = message.user
     recipient = message.conversation.opposed_user(sender)
 
+    return broadcast_friendship(recipient, message) if message.conversation.status == "pending"
     broadcast_to_sender(sender, message)
     broadcast_to_recipient(recipient, message)
   end
@@ -24,6 +25,18 @@ class MessageBroadcastJob < ApplicationJob
       "conversations-#{user.id}",
       window: render_window(message.conversation, user),
       message: render_message(message, user),
+      conversation_id: message.conversation_id
+    )
+  end
+
+  def broadcast_friendship(user, message)
+    ActionCable.server.broadcast(
+      "friendships-#{user.id}",
+      message: render_message(message, user),
+      window: ApplicationController.render(
+        partial: 'conversations/invite',
+        locals: { conversation: message.conversation, user: user }
+      ),
       conversation_id: message.conversation_id
     )
   end

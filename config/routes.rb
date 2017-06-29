@@ -3,12 +3,18 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :conversations, only: [:create] do
+  resources :conversations, only: [:create, :new, :show] do
     member do
       post :close
+      post :decline
+      post :accept
+      get :bottle
     end
 
     resources :messages, only: [:create]
 
   end
+
+  get "/messages/new", to: "messages#new"
+  post "/messages/sent", to: "messages#sent"
 end

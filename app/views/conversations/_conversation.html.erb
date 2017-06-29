@@ -11,11 +11,11 @@
           <%= render 'conversations/conversation_content', messages: conversation.messages, user: user %>
         </ul>
       </div>
-      <form class="new_message">
+      <form class="create_message">
         <input name="conversation_id" type="hidden" value="<%= conversation.id %>">
-        <input name="user_id" type="hidden" value="<%= user.id %>">
-        <textarea name="body" class="form-control"></textarea>
+        <textarea name="body" class="form-control" onKeyPress="handleKeyCode(event)"></textarea>
         <input type="submit" class="btn btn-success" value="Send">
+        <input name="user_id" type="hidden" value="<%= user.id %>">
       </form>
     </div>
   </div>

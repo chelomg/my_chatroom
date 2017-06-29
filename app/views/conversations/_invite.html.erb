@@ -1,0 +1,20 @@
+<li>
+  <div class="panel panel-default" data-conversation-id="<%= conversation.id %>">
+    <div class="panel-heading">
+      <%= link_to '來自遠方的瓶子', '', class: 'toggle-window' %>
+      <%= link_to "x", close_conversation_path(conversation), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
+    </div>
+
+    <div class="panel-body" style="display: none;">
+      <div class="messages-list">
+        <ul>
+          <%= render 'conversations/invite_content', messages: conversation.messages, user: user %>
+        </ul>
+      </div>
+      <div>
+        <%= link_to '只是垃圾，資源回收', decline_conversation_path(conversation), class: 'btn btn-danger', remote: true, method: :post %>
+        <%= link_to '接受', accept_conversation_path(conversation), class: 'btn btn-default', remote: true, method: :post %>
+      </div>
+    </div>
+  </div>
+</li>

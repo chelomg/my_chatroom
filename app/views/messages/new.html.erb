@@ -1,0 +1,11 @@
+<h1>丟瓶子</h1>
+
+<%= form_for @message, url: messages_sent_path(@message), method: :post do |f| %>
+  <%= f.label :name, "內容" %>
+  <%= f.text_area :body %> <br />
+
+  <%= f.submit %>
+<% end %>
+
+<br />
+<%= link_to '回上一頁', root_path %>
