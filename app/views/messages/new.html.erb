@@ -1,11 +1,19 @@
 <h1>丟瓶子</h1>
 
+<div class="col-sm-5">
+  <%= svg 'bottle' %>
+</div>
+<div class="col-sm-6">
 <%= form_for @message, url: messages_sent_path(@message), method: :post do |f| %>
-  <%= f.label :name, "內容" %>
-  <%= f.text_area :body %> <br />
-
-  <%= f.submit %>
+  <div class="form-group">
+    <h2><%= f.label :name, "內容" %></h2>
+    <%= f.text_area :body, class: "form-control", rows: "5", placeholder: "寫下你想說的話～" %> <br />
+  </div>
+  <%= f.submit "包好塞到瓶子裡", class: "btn btn-danger btn-lg" %>
 <% end %>
-
 <br />
-<%= link_to '回上一頁', root_path %>
+<%= link_to '回上一頁', root_path, class: "btn btn-default" %>
+</div>
+
+<div class="col-sm-1">
+</div>
