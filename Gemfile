@@ -17,6 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'devise'
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'pg'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
