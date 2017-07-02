@@ -22,7 +22,7 @@
     var messages_list = panel.find('.messages-list');
 
     if ($('#conversations-list').children().length > 2) {
-      $('#conversations-list li').children().removeClass('panel-default').addClass('panel-warning');
+      $('#conversations-list > li > div').removeClass('panel-default').addClass('panel-warning');
       $('#conversations-list li div .panel-body').hide();
     }
 
