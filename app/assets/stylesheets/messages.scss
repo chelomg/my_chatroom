@@ -1,3 +1,31 @@
   // Place all the styles related to the messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.messages-list {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+.message-sent {
+  position: relative;
+  background-color: #0084ff;
+  border-color: #BCE8F1;
+  margin: 3px 20px;
+  padding: 10px;
+  float: right;
+  color: #fff;
+  border-radius: 30px;
+}
+
+
+.message-received {
+  background-color: #eee;
+  border-color: #EEEEEE;
+  margin: 3px 20px;
+  padding: 10px;
+  float: left;
+  border-radius: 30px;
+}
