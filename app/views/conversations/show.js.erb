@@ -3,11 +3,11 @@ var conversation = conversations.find("[data-conversation-id='" + "<%= @conversa
 
 if (conversation.length !== 1) {
   if ($('#conversations-list').children().length >= 2) {
-    $('#conversations-list li').children().removeClass('panel-default').addClass('panel-warning');
+    $('#conversations-list > li > div').removeClass('panel-default').addClass('panel-warning');
     $('#conversations-list li div .panel-body').hide();
   }
-conversations.append("<%= j(render 'conversations/conversation', conversation: @conversation, user: current_user) %>");
-conversation = conversations.find("[data-conversation-id='" + "<%= @conversation.id %>" + "']");
+  conversations.append("<%= j(render 'conversations/conversation', conversation: @conversation, user: current_user) %>");
+  conversation = conversations.find("[data-conversation-id='" + "<%= @conversation.id %>" + "']");
 }
 
 conversation.find('.panel-body').show();

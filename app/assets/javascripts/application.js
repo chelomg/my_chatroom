@@ -20,16 +20,21 @@
     e.preventDefault();
     var panel = $(this).parent().parent();
     var messages_list = panel.find('.messages-list');
+    // keep last status
+    var visible = panel.find('.panel-body').is(":visible");
 
     if ($('#conversations-list').children().length > 2) {
-      $('#conversations-list li').children().removeClass('panel-default').addClass('panel-warning');
-      $('#conversations-list li div .panel-body').hide();
+      $('#conversations-list > li > div').removeClass('panel-default').addClass('panel-warning');
+      $('#conversations-list > li > .panel-warning > .panel-body').hide();
     }
 
-    panel.find('.panel-body').toggle();
-    panel.attr('class', 'panel panel-default');
 
-    if (panel.find('.panel-body').is(':visible')) {
+    if (visible) {
+      panel.find('.panel-body').hide();
+      panel.attr('class', 'panel panel-warning');
+    }else {
+      panel.find('.panel-body').show();
+      panel.attr('class', 'panel panel-default');
       var height = messages_list[0].scrollHeight;
       messages_list.scrollTop(height);
     }

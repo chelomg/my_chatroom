@@ -12,3 +12,19 @@
 .panel-warning {
   width: 170px;
 }
+
+.chat-div {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+#conversations-list {
+  display: inline-block;
+  vertical-align: bottom;
+  float: right;
+}
+
+#conversations-list > li {
+  display: inline-block;
+}
