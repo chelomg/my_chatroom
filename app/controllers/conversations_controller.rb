@@ -1,4 +1,6 @@
 class ConversationsController < ApplicationController
+  before_action :find_conversation, only: [:close, :decline, :accept]
+
   def show
     @conversation = Conversation.get(current_user.id, params[:id])
 
@@ -19,8 +21,6 @@ class ConversationsController < ApplicationController
   end
 
   def close
-    @conversation = Conversation.find(params[:id])
-
     session[:conversations].delete(@conversation.id)
 
     respond_to do |format|
@@ -29,7 +29,6 @@ class ConversationsController < ApplicationController
   end
 
   def decline
-    @conversation = Conversation.find(params[:id])
     @conversation.update_attributes(status: 2, action_id: current_user.id)
     session[:conversations].delete(@conversation.id)
 
@@ -39,7 +38,6 @@ class ConversationsController < ApplicationController
   end
 
   def accept
-    @conversation = Conversation.find(params[:id])
     @accept_user = User.find(@conversation.action_id)
     @conversation.update_attributes(status: 1, action_id: current_user.id)
 
@@ -52,6 +50,9 @@ class ConversationsController < ApplicationController
   end
 
   private
+  def find_conversation
+    @conversation = Conversation.find(params[:id])
+  end
 
   def add_to_conversations
     session[:conversations] ||= []
