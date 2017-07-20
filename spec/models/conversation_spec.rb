@@ -9,6 +9,10 @@ RSpec.describe Conversation, type: :model do
   end
 
   it '.my_relation' do
+    user1 = create(:user, id: 1, email: "example1@gmail.com")
+    user2 = create(:user, id: 2, email: "example2@gmail.com")
+    conversation = create(:conversation, sender_id: user1.id, recipient_id: user2.id)
+    expect(Conversation.my_relation(1)).to include(conversation)
   end
 
   it '.get' do
