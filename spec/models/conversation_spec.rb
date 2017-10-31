@@ -32,6 +32,12 @@ RSpec.describe Conversation, type: :model do
   end
 
   it '.get' do
+    user1 = create(:user)
+    user2 = create(:user)
+    #first time
+    expect { Conversation.get(user1.id, user2.id) }.to change { Conversation.count }.by(1)
+    #second time (already existed)
+    expect { Conversation.get(user1.id, user2.id) }.to change { Conversation.count }.by(0)
   end
 
   it '#opposed_user' do
