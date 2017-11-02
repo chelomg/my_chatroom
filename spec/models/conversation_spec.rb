@@ -41,6 +41,11 @@ RSpec.describe Conversation, type: :model do
   end
 
   it '#opposed_user' do
+    user1 = create(:user)
+    user2 = create(:user)
+    conversation = create(:conversation, recipient_id: user1.id, sender_id: user2.id)
+    expect(conversation.opposed_user(user1)).to eq(user2)
+    expect(conversation.opposed_user(user2)).to eq(user1)
   end
 
   it '.find_request_users' do
