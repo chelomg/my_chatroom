@@ -49,6 +49,17 @@ RSpec.describe Conversation, type: :model do
   end
 
   it '.find_request_users' do
+    user1 = create(:user)
+    user2 = create(:user)
+    user3 = create(:user)
+    conversation1 = create(:conversation, status: 0, action_id: user1.id, sender_id: user1.id, recipient_id: user2.id)
+    conversation2 = create(:conversation, status: 0, action_id: user2.id, sender_id: user2.id, recipient_id: user1.id)
+    conversation3 = create(:conversation, status: 1, action_id: user2.id, sender_id: user3.id, recipient_id: user2.id)
+    conversation4 = create(:conversation, status: 1, action_id: user1.id, sender_id: user3.id, recipient_id: user1.id)
+    expect(Conversation.find_request_users(user1).count).to eq(1)
+    expect(Conversation.find_request_users(user1)).to include(conversation2.action_id)
+    expect(Conversation.find_request_users(user2).count).to eq(1)
+    expect(Conversation.find_request_users(user2)).to include(conversation1.action_id)
   end
 
   it '.find_friends' do
