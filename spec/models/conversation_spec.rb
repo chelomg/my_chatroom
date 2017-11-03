@@ -5,6 +5,7 @@ RSpec.describe Conversation, type: :model do
   it { should belong_to(:sender) }
   it { should belong_to(:recipient) }
   it { should validate_uniqueness_of(:sender_id).scoped_to(:recipient_id) }
+
   describe '.between 找出我跟某人的關係' do
     let(:me) { create(:user) }
     it 'I am sender' do
@@ -46,25 +47,24 @@ RSpec.describe Conversation, type: :model do
     expect(conversation.opposed_user(user2)).to eq(user1)
   end
 
-  it '.find_request_users' do
-    conversation1 = create(:conversation, status: 0, action_id: user1.id, sender_id: user1.id, recipient_id: user2.id)
-    conversation2 = create(:conversation, status: 0, action_id: user2.id, sender_id: user2.id, recipient_id: user1.id)
-    conversation3 = create(:conversation, status: 1, action_id: user2.id, sender_id: user3.id, recipient_id: user2.id)
-    conversation4 = create(:conversation, status: 1, action_id: user1.id, sender_id: user3.id, recipient_id: user1.id)
-    expect(Conversation.find_request_users(user1).count).to eq(1)
-    expect(Conversation.find_request_users(user1)).to include(conversation2.action_id)
-    expect(Conversation.find_request_users(user2).count).to eq(1)
-    expect(Conversation.find_request_users(user2)).to include(conversation1.action_id)
-  end
+  describe 'find user using conversation status' do
+    let!(:conversation1) { create(:conversation, status: 0, action_id: user1.id, sender_id: user1.id, recipient_id: user2.id) }
+    let!(:conversation2) { create(:conversation, status: 0, action_id: user2.id, sender_id: user2.id, recipient_id: user1.id) }
+    let!(:conversation3) { create(:conversation, status: 1, action_id: user2.id, sender_id: user3.id, recipient_id: user2.id) }
+    let!(:conversation4) { create(:conversation, status: 1, action_id: user1.id, sender_id: user3.id, recipient_id: user1.id) }
 
-  it '.find_friends' do
-    create(:conversation, status: 0, action_id: user1.id, sender_id: user1.id, recipient_id: user2.id)
-    create(:conversation, status: 0, action_id: user2.id, sender_id: user2.id, recipient_id: user1.id)
-    create(:conversation, status: 1, action_id: user2.id, sender_id: user3.id, recipient_id: user2.id)
-    create(:conversation, status: 1, action_id: user1.id, sender_id: user3.id, recipient_id: user1.id)
-    expect(Conversation.find_friends(user1).count).to eq(1)
-    expect(Conversation.find_friends(user1)).to include(user3.id)
-    expect(Conversation.find_friends(user2).count).to eq(1)
-    expect(Conversation.find_friends(user2)).to include(user3.id)
+    it '.find_request_users' do
+      expect(Conversation.find_request_users(user1).count).to eq(1)
+      expect(Conversation.find_request_users(user1)).to include(conversation2.action_id)
+      expect(Conversation.find_request_users(user2).count).to eq(1)
+      expect(Conversation.find_request_users(user2)).to include(conversation1.action_id)
+    end
+
+    it '.find_friends' do
+      expect(Conversation.find_friends(user1).count).to eq(1)
+      expect(Conversation.find_friends(user1)).to include(user3.id)
+      expect(Conversation.find_friends(user2).count).to eq(1)
+      expect(Conversation.find_friends(user2)).to include(user3.id)
+    end
   end
 end
